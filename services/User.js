@@ -68,7 +68,20 @@ class UserService {
 
     }
 
+    async getUser(id) {
+        try {
+            //Find user
+            const userFound = await UserModel.findById(id)
+            if (!userFound)  return null
+            const { password, ...user } = userFound._doc
+            console.log(user);
+            return user
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
 
+    }
 }
 
 

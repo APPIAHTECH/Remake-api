@@ -105,6 +105,31 @@ const userRoutes = (app) => {
         }
     });
 
+    //Get user
+    /**
+     * @Todo
+     * Validate form data. Check if all value are valid
+     * This way of auth is not the most secure, remember to todo JWT version!
+     */
+    router.get('/:id', async (req, res) => {
+        try {
+            //Get one user
+            const userID = req.params.id
+
+            if (userID) {
+                const userService = new UserService()
+                const user = await userService.getUser(userID)
+                return res.status(200).json({ user, foundUser: true })
+
+            }
+
+            return res.status(200).json({ foundUser: false })
+
+        } catch (error) {
+            //Something wen't wrong deleting the user 
+            return res.status(500).json({ foundUser: false })
+        }
+    });
 
 
 };
