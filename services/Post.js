@@ -48,6 +48,25 @@ class PostService {
         }
 
     }
+
+    async update(post) {
+
+        try {
+            //update user in db
+            const updatedPost = await PostModel.findByIdAndUpdate(post.postID, {
+                $set: post
+            }, { new: true, useFindAndModify: false }) //new, send updated verson, useFindAndModify , removes warnings
+           
+            //Emit event
+            return updatedPost
+
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+
+    }
+
 }
 
 

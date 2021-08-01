@@ -51,6 +51,32 @@ const postRoutes = (app) => {
     });
 
 
+    //Update post
+    /**
+     * @Todo
+     * Validate form data. Check if all value are valid
+     * 
+     */
+    router.put('/:username', async (req, res) => {
+        try {
+            const username = req.params.username
+            const post = req.body
+
+            if (username === post.username) {
+                const postService = new PostService()
+                console.log( post )
+                const updatedPost = await postService.update(post)
+                if (updatedPost) return res.status(200).json({ updated: true })
+            }
+
+            return res.status(200).json({ updated: false })
+        } catch (error) {
+            return res.status(500).json({ updated: false })
+        }
+    });
+
+
+
 };
 
 module.exports = postRoutes
