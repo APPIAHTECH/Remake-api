@@ -1,3 +1,5 @@
+const multer = require("multer")
+
 const { eventEmitter } = require("./Auth")
 const { encrypt } = require("./Utils")
 const config = require("./../config/index")
