@@ -56,9 +56,24 @@ class PostService {
             const updatedPost = await PostModel.findByIdAndUpdate(post.postID, {
                 $set: post
             }, { new: true, useFindAndModify: false }) //new, send updated verson, useFindAndModify , removes warnings
-           
+
             //Emit event
             return updatedPost
+
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+
+    }
+
+    async delete(postID) {
+
+        try {
+            //delete user in db
+            const postDeleted = await PostModel.findByIdAndDelete(postID)
+            //Emit event
+            return postDeleted
 
         } catch (error) {
             console.log(error)

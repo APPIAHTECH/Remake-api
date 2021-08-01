@@ -41,7 +41,8 @@ const postRoutes = (app) => {
             if (postID) {
                 const postService = new PostService()
                 const post = await postService.getPost(postID)
-                return res.status(200).json({ post, postFound: true })
+
+                if(post) return res.status(200).json({ post, postFound: true })
             }
             return res.status(200).json({ postFound: false })
 
@@ -64,7 +65,6 @@ const postRoutes = (app) => {
 
             if (username === post.username) {
                 const postService = new PostService()
-                console.log( post )
                 const updatedPost = await postService.update(post)
                 if (updatedPost) return res.status(200).json({ updated: true })
             }
@@ -76,7 +76,20 @@ const postRoutes = (app) => {
     });
 
 
-
+    //Delete post
+    router.delete('/:id', async (req, res) => {
+        try {
+            const postID = req.params.id
+            if (postID) {
+                const postService = new PostService()
+                const postDeleted = await postService.delete(postID)
+                if (postDeleted) return res.status(200).json({ deleted: true })
+            }
+            return res.status(200).json({ deleted: false })
+        } catch (error) {
+            return res.status(500).json({ deleted: false })
+        }
+    });
 };
 
 module.exports = postRoutes
