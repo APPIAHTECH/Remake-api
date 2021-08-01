@@ -38,7 +38,16 @@ class PostService {
 
     }
 
-  
+    async getPost(id) {
+        try {
+            //Find post
+            return await PostModel.findById(id)
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+
+    }
 }
 
 

@@ -24,12 +24,31 @@ const postRoutes = (app) => {
             } else return res.status(200).json({ created: false })
 
         } catch (error) {
-            //Something wen't wrong creating the user 
             return res.status(500).json({ created: false })
         }
     });
 
+    //Read post
+    /**
+     * @Todo
+     * Validate form data. Check if all value are valid
+     * 
+     */
+    router.get('/:id', async (req, res) => {
+        try {
+            const postID = req.params.id
 
+            if (postID) {
+                const postService = new PostService()
+                const post = await postService.getPost(postID)
+                return res.status(200).json({ post, postFound: true })
+            }
+            return res.status(200).json({ postFound: false })
+
+        } catch (error) {
+            return res.status(500).json({ postFound: false })
+        }
+    });
 
 
 };
