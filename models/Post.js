@@ -16,6 +16,7 @@ const postSchema = new Schema({
     photo:{
         type:String,
         required: false,
+        default: ""
     },
 
     username:{
