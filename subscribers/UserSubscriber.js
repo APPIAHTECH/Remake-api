@@ -14,12 +14,12 @@ class UserSubscriber
          * @TODO
          * We can add some third party labrary 
          */
-        console.log(`User ${data.user} sign up event`);
+        console.log(`User ${data} sign up event`);
     }
 
     onUserSignIp(data)
     {
-        console.log(`User ${data.user} sign in event`);
+        console.log(`User ${data} sign in event`);
     }
 }
 

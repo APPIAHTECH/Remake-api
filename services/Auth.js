@@ -1,26 +1,52 @@
-const EventEmitter = require('events')
-const events = require('./../subscribers/events')
+const { EventEmitter } = require('events');
+const eventsAtions = require('./../subscribers/events')
+const UserSubscriber = require('./../subscribers/UserSubscriber')
+const UserModel = require("./../models/User")
 
-class Auth extends EventEmitter
-{
-    singUp()
-    {
-        //Create user
-        console.log("Create user");
+/**
+ * Decide to create an istance of EventEmitter, so anyone can import and use it
+ */
+const eventEmitter = new EventEmitter()
 
-        //Emit event
-        this.emit(events.user.signUp, { user: "vegeta" })
+class AuthService {
+    constructor() {
+        this.eventEmitter = eventEmitter
+        //User subscrbe to the Auth events
+        new UserSubscriber(this.eventEmitter).listen()
+    }
+    async singUp(data) {
+
+        try {
+            //Create user
+            console.log("Create user");
+            const newUser = new UserModel({
+                username: data.username,
+                email: data.email,
+                password: data.password
+            })
+
+            //Save to db
+            const user = await newUser.save()
+
+            //Emit event
+            this.eventEmitter.emit(eventsAtions.user.signUp, user)
+
+            return user
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+
     }
 
-    singIn()
-    {
+    singIn() {
         //Create user
         console.log("Loggin user");
 
         //Emit event
-        this.emit(events.user.signIn, { user: "vegeta" })
+        this.eventEmitter.emit(eventsAtions.user.signIn, { user: "vegeta" })
     }
 }
 
 
-module.exports = Auth
+module.exports = { AuthService, eventEmitter }
