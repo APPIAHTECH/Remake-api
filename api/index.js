@@ -1,5 +1,6 @@
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
+const categoryRoutes = require("./routes/category");
 
 // guaranteed to get dependencies
 const routes = () => {
@@ -7,6 +8,7 @@ const routes = () => {
     //...More routes ...
     userRoutes(app);
     postRoutes(app);
+    categoryRoutes(app);
 
     return app
 }

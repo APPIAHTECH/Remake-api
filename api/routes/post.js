@@ -99,7 +99,7 @@ const postRoutes = (app) => {
     router.get('/', async (req, res) => {
         try {
             const username = req.query.user
-            const category = req.query.categoryName
+            const category = req.query.category
             const postService = new PostService()
             const post = await postService.getAllPost(username, category)
             if (post) return res.status(200).json({ post, foundPost: true })
