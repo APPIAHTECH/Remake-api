@@ -2,7 +2,8 @@ const user =
 {
     signUp: 'userSignUp',
     signIn: 'userSignIn',
-    updated: 'userDataUpdated'
+    updated: 'userDataUpdate',
+    deleted: 'userDeñeted'
 }
 
 

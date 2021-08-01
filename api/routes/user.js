@@ -44,7 +44,7 @@ const userRoutes = (app) => {
             else return res.status(200).json({ login: false })
 
         } catch (error) {
-            //Something wen't wrong creating the user 
+            //Something wen't wrong login the user 
             return res.status(500).json({ login: false })
         }
     });
@@ -60,23 +60,51 @@ const userRoutes = (app) => {
         try {
             //Update user
             const userParamID = req.params.id
-            const userInfo = req.body
+            const user = req.body
 
-            if (userParamID === userInfo.userID) {
+            if (userParamID === user.userID) {
                 const userService = new UserService()
-                const updatedUser = await userService.update(userInfo)
+                const updatedUser = await userService.update(user)
 
                 if (updatedUser) return res.status(200).json({ updated: true })
 
             }
-            
+
             return res.status(200).json({ updated: false })
 
         } catch (error) {
-            //Something wen't wrong creating the user 
+            //Something wen't wrong updating the user 
             return res.status(500).json({ updated: false })
         }
     });
+
+    //Delete user
+    /**
+     * @Todo
+     * Validate form data. Check if all value are valid
+     * This way of auth is not the most secure, remember to todo JWT version!
+     */
+    router.delete('/:id', async (req, res) => {
+        try {
+            //Delelte user
+            const userParamID = req.params.id
+            const user = req.body
+
+            if (userParamID === user.userID) {
+                const userService = new UserService()
+                const deletedUser = await userService.delete(user)
+                if (deletedUser) return res.status(200).json({ deleted: true })
+
+            }
+
+            return res.status(200).json({ deleted: false })
+
+        } catch (error) {
+            //Something wen't wrong deleting the user 
+            return res.status(500).json({ deleted: false })
+        }
+    });
+
 
 
 };

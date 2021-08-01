@@ -6,6 +6,7 @@ class UserSubscriber {
         this.eventEmitter.on(events.user.signUp, this.onUserSignUp)
         this.eventEmitter.on(events.user.signIn, this.onUserSignIp)
         this.eventEmitter.on(events.user.updated, this.onUserDataUpdated)
+        this.eventEmitter.on(events.user.deleted, this.onUserDeleted)
     }
     onUserSignUp(data) {
         /**
@@ -20,7 +21,11 @@ class UserSubscriber {
     }
 
     onUserDataUpdated(data) {
-        console.log(`User ${data} onUserDataUpdated event`);
+        console.log(`User ${data} onUserDataUpdate event`);
+    }
+
+    onUserDeleted(data) {
+        console.log(`User ${data} onUserDeleted event`);
     }
 }
 
