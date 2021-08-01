@@ -93,6 +93,21 @@ const postRoutes = (app) => {
             return res.status(500).json({ deleted: false })
         }
     });
+
+
+    //Get all post
+    router.get('/', async (req, res) => {
+        try {
+            const username = req.query.user
+            const category = req.query.categoryName
+            const postService = new PostService()
+            const post = await postService.getAllPost(username, category)
+            if (post) return res.status(200).json({ post, foundPost: true })
+            return res.status(200).json({ foundPost: false })
+        } catch (error) {
+            return res.status(500).json({ foundPost: false })
+        }
+    });
 };
 
 module.exports = postRoutes

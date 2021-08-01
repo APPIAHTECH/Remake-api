@@ -49,7 +49,7 @@ class PostService {
 
     }
 
-    async update({postInfo, postID}) {
+    async update({ postInfo, postID }) {
 
         try {
             //update user in db
@@ -81,6 +81,23 @@ class PostService {
 
     }
 
+    async getAllPost(username, category) {
+
+        try {
+            //find post by user
+            let posts;
+            if (username) posts = await PostModel.find({ username })
+            else if (category) posts = await PostModel.find({ categories: { $in: [category] } })
+            else posts = await PostModel.find()
+
+            //Emit event
+            return posts
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+
+    }
 }
 
 
