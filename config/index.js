@@ -16,6 +16,11 @@ const load = {
    */
   port: parseInt(process.env.PORT, 10),
 
+    /**
+   * Bycryp saltRounds
+   */
+     saltRounds: 10,
+
   /**
    * That long string from mlab
    */

@@ -9,7 +9,6 @@ const userRoutes = (app) => {
     /**
      * @Todo
      * Validate form data. Check if all value are valid
-     * Convert password to hash  using bycrypt
      */
     router.post('/register', async (req, res) => {
         try {
@@ -26,6 +25,29 @@ const userRoutes = (app) => {
             return res.status(500).json({ registed: false })
         }
     });
+
+
+    //Login user
+    /**
+     * @Todo
+     * Validate form data. Check if all value are valid
+     */
+    router.post('/login', async (req, res) => {
+        try {
+            //Login user
+            const userInfo = req.body
+            const authService = new AuthService()
+            const { match, user } = await authService.singIn(userInfo)
+
+            if (match) return res.status(200).json({ user, login: true })
+            else return res.status(200).json({ login: false })
+
+        } catch (error) {
+            //Something wen't wrong creating the user 
+            return res.status(500).json({ login: false })
+        }
+    });
+
 
 };
 
