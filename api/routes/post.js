@@ -42,7 +42,7 @@ const postRoutes = (app) => {
                 const postService = new PostService()
                 const post = await postService.getPost(postID)
 
-                if(post) return res.status(200).json({ post, postFound: true })
+                if (post) return res.status(200).json({ post, postFound: true })
             }
             return res.status(200).json({ postFound: false })
 
@@ -58,17 +58,17 @@ const postRoutes = (app) => {
      * Validate form data. Check if all value are valid
      * 
      */
-    router.put('/:username', async (req, res) => {
+    router.put('/:id', async (req, res) => {
         try {
-            const username = req.params.username
-            const post = req.body
+            const postID = req.params.id
+            const postInfo = req.body
+            const postService = new PostService()
 
-            if (username === post.username) {
-                const postService = new PostService()
-                const updatedPost = await postService.update(post)
+            const post = await postService.getPost(postID)
+            if (post && (post.username === postInfo.username)) {
+                const updatedPost = await postService.update({ postID, postInfo })
                 if (updatedPost) return res.status(200).json({ updated: true })
             }
-
             return res.status(200).json({ updated: false })
         } catch (error) {
             return res.status(500).json({ updated: false })
@@ -80,8 +80,11 @@ const postRoutes = (app) => {
     router.delete('/:id', async (req, res) => {
         try {
             const postID = req.params.id
-            if (postID) {
-                const postService = new PostService()
+            const postInfo = req.body
+            const postService = new PostService()
+            const post = await postService.getPost(postID)
+
+            if (post && (post.username === postInfo.username)) {
                 const postDeleted = await postService.delete(postID)
                 if (postDeleted) return res.status(200).json({ deleted: true })
             }

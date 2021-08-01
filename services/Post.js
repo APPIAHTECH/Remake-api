@@ -49,12 +49,12 @@ class PostService {
 
     }
 
-    async update(post) {
+    async update({postInfo, postID}) {
 
         try {
             //update user in db
-            const updatedPost = await PostModel.findByIdAndUpdate(post.postID, {
-                $set: post
+            const updatedPost = await PostModel.findByIdAndUpdate(postID, {
+                $set: postInfo
             }, { new: true, useFindAndModify: false }) //new, send updated verson, useFindAndModify , removes warnings
 
             //Emit event
@@ -71,9 +71,8 @@ class PostService {
 
         try {
             //delete user in db
-            const postDeleted = await PostModel.findByIdAndDelete(postID)
+            return await PostModel.findByIdAndDelete(postID)
             //Emit event
-            return postDeleted
 
         } catch (error) {
             console.log(error)
