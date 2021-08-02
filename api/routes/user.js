@@ -1,8 +1,7 @@
 const router = require('express').Router()
-const middlewares = require("./../middlewares/index")
+const { upload } = require("./../middlewares/index")
 const { AuthService } = require("../../services/Auth")
 const { UserService } = require("../../services/User")
-const upload = multer({ dest: 'images/' })
 
 const userRoutes = (app) => {
     app.use('/users', router);
@@ -137,10 +136,19 @@ const userRoutes = (app) => {
     //Upload images
     /**
      * @Todo
-     * Store images using AWS | Firebar or any CDN
+     * Store images using AWS | Firebase or any CDN
      */
-    router.post('/photos/upload', upload.array('photos', 12), async (req, res) => {
-        return res.status(200).json({ uploaded: true })
+    router.post('/upload', upload.single('photos'), async (req, res) => {
+        try {
+            const file = req.file
+            if (!file) return res.status(200).json({ uploaded: false })
+            return res.status(200).json({ uploaded: true })
+
+        } catch (error) {
+            //Something wen't wrong deleting the user 
+            return res.status(500).json({ uploaded: false })
+        }
+
     });
 
 

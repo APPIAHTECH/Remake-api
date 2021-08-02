@@ -1,5 +1,3 @@
-const multer = require("multer")
-
 const { eventEmitter } = require("./Auth")
 const { encrypt } = require("./Utils")
 const config = require("./../config/index")
@@ -74,7 +72,7 @@ class UserService {
         try {
             //Find user
             const userFound = await UserModel.findById(id)
-            if (!userFound)  return null
+            if (!userFound) return null
             const { password, ...user } = userFound._doc
             console.log(user);
             return user

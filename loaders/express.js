@@ -17,7 +17,7 @@ const expressInit = async (app) => {
     app.use(cors());
 
     // Middleware that transforms the raw string of req.body into json
-    app.use(bodyParser.json()); //utilizes the body-parser package
+    app.use(bodyParser.urlencoded({extended: true}))
 
     // Load API routes /api
     app.use(config.api.prefix, routes());
